@@ -6,3 +6,22 @@
   font-size: 18px;
   font-family: "DM Sans", sans-serif;
 }
+:root {
+  --primary-red: hsl(10, 79%, 65%);
+  --primary-cyan: hsl(186, 34%, 60%);
+  --neutral-dark-brown: hsl(25, 47%, 15%);
+  --neutral-medium-brown: hsl(28, 10%, 53%);
+  --neutral-cream: hsl(27, 66%, 92%);
+  --neutral-pale-orange: hsl(33, 100%, 98%);
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+#root {
+  padding-inline: 1rem;
+  width: 100%;
+}
