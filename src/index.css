@@ -15,6 +15,7 @@
   --neutral-pale-orange: hsl(33, 100%, 98%);
 }
 body {
+  background-color: var(--neutral-cream);
   display: flex;
   flex-direction: column;
   justify-content: center;
