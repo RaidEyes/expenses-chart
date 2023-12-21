@@ -3,7 +3,7 @@ import Main from "./components/Main/Main";
 
 function App() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6 sm:max-w-[450px] justify-center">
       <Header />
       <Main />
     </div>
