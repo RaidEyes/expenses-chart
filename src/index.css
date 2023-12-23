@@ -21,6 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding-block: 1.5rem;
 }
 #root {
   padding-inline: 1rem;

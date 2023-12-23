@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useState } from "react";
 import data from "../../data/data.json";
 
 interface dataObject {
@@ -8,24 +8,18 @@ interface dataObject {
 }
 
 function Main() {
-  const dates: dataObject[] = data;
+  const [dates, setDates] = useState(data);
 
-  addBackgroundColor();
-
-  useEffect(() => {
-    showInfoHover();
-  }, []);
-
-  function showInfoHover(): void {}
-
-  function addBackgroundColor(): void {
+  const addBackgroundColor = useCallback((): void => {
     const amountArr: number[] = dates.map((item) => item.amount);
     const highestAmount: number = Math.max(...amountArr);
     dates.forEach((item: { day: String; amount: Number; color?: string }) => {
       item.color =
         item.amount === highestAmount ? `--primary-cyan` : `--primary-red`;
     });
-  }
+  }, [dates]);
+
+  addBackgroundColor();
 
   return (
     <div className="flex flex-col justify-center gap-4 p-4 bg-[var(--neutral-pale-orange)] rounded-xl">
