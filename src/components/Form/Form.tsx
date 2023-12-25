@@ -5,10 +5,17 @@ function Form() {
   const [dates, setDates] = useState(data);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const formData: {} = new FormData(e.currentTarget);
-    const newUser: {} = Object.fromEntries(formData);
-    console.log(newUser);
+    const formData = new FormData(e.currentTarget);
+    const userData: {
+      day: string;
+      amount: number;
+    }[] = [];
+    for (const [key, value] of [...formData.entries()]) {
+      userData.push({ day: `${key}`, amount: parseInt(`${value}`) });
+    }
+    setDates(userData);
   };
+  console.log(dates);
   return (
     <div className="py-4 bg-orange-200 rounded-xl">
       <div className="px-6 pb-6">
@@ -20,7 +27,7 @@ function Form() {
         </label>
         <input
           placeholder="Enter your balance"
-          type="text"
+          type="number"
           id="balance"
           name="balance"
           className="rounded-[0.25rem] px-4 py-2"
