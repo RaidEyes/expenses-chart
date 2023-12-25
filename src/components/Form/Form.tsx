@@ -1,21 +1,10 @@
-import { useState } from "react";
-import data from "../../data/data.json";
+import { userInput } from "../Hook/userDataContext";
+import { useContext } from "react";
 
 function Form() {
-  const [dates, setDates] = useState(data);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const userData: {
-      day: string;
-      amount: number;
-    }[] = [];
-    for (const [key, value] of [...formData.entries()]) {
-      userData.push({ day: `${key}`, amount: parseInt(`${value}`) });
-    }
-    setDates(userData);
-  };
+  const { dates, handleSubmit } = useContext(userInput);
   console.log(dates);
+
   return (
     <div className="py-4 bg-orange-200 rounded-xl">
       <div className="px-6 pb-6">
