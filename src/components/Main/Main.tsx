@@ -1,23 +1,20 @@
-import { useCallback, useState } from "react";
-import data from "../../data/data.json";
-
-interface dataObject {
-  day: string;
-  amount: number;
-  color?: string;
-}
+import { useCallback, useContext } from "react";
+import { userContext } from "../../App";
 
 function Main() {
-  const [dates, setDates] = useState(data);
+  const userData = useContext(userContext);
+  if (!userData) return null;
 
   const addBackgroundColor = useCallback((): void => {
-    const amountArr: number[] = dates.map((item) => item.amount);
+    const amountArr: number[] = userData.dates.map((item) => item.amount);
     const highestAmount: number = Math.max(...amountArr);
-    dates.forEach((item: { day: String; amount: Number; color?: string }) => {
-      item.color =
-        item.amount === highestAmount ? `--primary-cyan` : `--primary-red`;
-    });
-  }, [dates]);
+    userData.dates.forEach(
+      (item: { day: String; amount: Number; color?: string }) => {
+        item.color =
+          item.amount === highestAmount ? `--primary-cyan` : `--primary-red`;
+      }
+    );
+  }, [userData.dates]);
 
   addBackgroundColor();
 
@@ -27,29 +24,31 @@ function Main() {
         Spending - Last 7 days
       </h2>
       <ul className="relative flex flex-row items-end justify-between gap-2 py-4 border-b-2 border-b-slate-600/10">
-        {dates.map((date: { day: string; amount: number; color?: string }) => (
-          <li
-            key={date.day}
-            id={date.day}
-            className="flex flex-col items-center w-full gap-2 group"
-          >
-            <div className="group-hover:visible invisible w-[110%] bg-[var(--neutral-dark-brown)] text-center py-1 rounded-md">
-              <p className="text-[2.5vw] sm:text-xs text-white">
-                ${date.amount}
+        {userData.dates.map(
+          (date: { day: string; amount: number; color?: string }) => (
+            <li
+              key={date.day}
+              id={date.day}
+              className="flex flex-col items-center w-full gap-2 group"
+            >
+              <div className="group-hover:visible invisible w-[110%] bg-[var(--neutral-dark-brown)] text-center py-1 rounded-md">
+                <p className="text-[2.5vw] sm:text-xs text-white">
+                  ${date.amount}
+                </p>
+              </div>
+              <div
+                className="w-full sm:w-9 rounded-[0.2rem] hover:brightness-125 hover:cursor-pointer"
+                style={{
+                  height: `${date.amount * 3}px`,
+                  backgroundColor: `var(${date.color})`,
+                }}
+              ></div>
+              <p className="text-xs text-[var(--neutral-medium-brown)]">
+                {date.day}
               </p>
-            </div>
-            <div
-              className="w-full sm:w-9 rounded-[0.2rem] hover:brightness-125 hover:cursor-pointer"
-              style={{
-                height: `${date.amount * 3}px`,
-                backgroundColor: `var(${date.color})`,
-              }}
-            ></div>
-            <p className="text-xs text-[var(--neutral-medium-brown)]">
-              {date.day}
-            </p>
-          </li>
-        ))}
+            </li>
+          )
+        )}
       </ul>
       <div>
         <p className="text-[var(--neutral-medium-brown)] text-sm">

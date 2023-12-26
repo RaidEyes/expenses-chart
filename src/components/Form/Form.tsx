@@ -1,9 +1,10 @@
-import { createContext, useState } from "react";
-import data from "../../data/data.json";
+import { useContext } from "react";
+import { userContext } from "../../App";
 
 function Form() {
-  const [dates, setDates] = useState(data);
-  const userData = createContext(dates);
+  const userInput = useContext(userContext);
+
+  if (!userInput) return null;
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -14,9 +15,9 @@ function Form() {
     for (const [key, value] of [...formData.entries()]) {
       userData.push({ day: `${key}`, amount: parseInt(`${value}`) });
     }
-    setDates(userData);
-    console.log(userData);
+    userInput.setDates(userData);
   };
+
   return (
     <div className="py-4 bg-orange-200 rounded-xl">
       <div className="px-6 pb-6">
@@ -40,7 +41,7 @@ function Form() {
         className="flex flex-col justify-center w-full gap-4 px-6"
       >
         <ul className="flex flex-col gap-4">
-          {dates.map((date: { day: string; amount: number }) => (
+          {userInput.dates.map((date: { day: string; amount: number }) => (
             <li className="flex flex-row justify-start gap-7" key={date.day}>
               <input
                 className="px-4 rounded-md h-7"
