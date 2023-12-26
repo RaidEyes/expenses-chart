@@ -20,9 +20,9 @@ function App() {
 
   return (
     <userContext.Provider value={{ dates, setDates }}>
-      <div className="lg:grid-cols-2 lg:grid lg:auto-cols-max md:max-w-full lg:w-[1055px] flex flex-col gap-6 sm:max-w-[450px] justify-center">
+      <div className="transition-all duration-500 ease-in-out lg:grid-cols-2 lg:grid lg:auto-cols-max md:max-w-full lg:w-[1055px] flex flex-col gap-6 sm:max-w-[450px] justify-center">
         <Form />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 ">
           <Header />
           <Main />
         </div>

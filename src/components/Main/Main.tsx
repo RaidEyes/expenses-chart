@@ -5,8 +5,13 @@ function Main() {
   const userData = useContext(userContext);
   if (!userData) return null;
 
+  const totalAmount = userData.dates.reduce(
+    (prev, current) => prev + current.amount,
+    0
+  );
   const addBackgroundColor = useCallback((): void => {
     const amountArr: number[] = userData.dates.map((item) => item.amount);
+
     const highestAmount: number = Math.max(...amountArr);
     userData.dates.forEach(
       (item: { day: String; amount: Number; color?: string }) => {
@@ -17,6 +22,7 @@ function Main() {
   }, [userData.dates]);
 
   addBackgroundColor();
+  console.log(userData.dates);
 
   return (
     <div className="flex flex-col justify-center gap-4 p-4 bg-[var(--neutral-pale-orange)] rounded-xl">
@@ -39,7 +45,7 @@ function Main() {
               <div
                 className="w-full sm:w-9 rounded-[0.2rem] hover:brightness-125 hover:cursor-pointer"
                 style={{
-                  height: `${date.amount * 3}px`,
+                  height: `${(date.amount / totalAmount) * 100 * 10}px`,
                   backgroundColor: `var(${date.color})`,
                 }}
               ></div>
@@ -52,11 +58,11 @@ function Main() {
       </ul>
       <div>
         <p className="text-[var(--neutral-medium-brown)] text-sm">
-          Total this month
+          Total this week
         </p>
         <div className="flex flex-row items-center justify-between">
           <h2 className="text-2xl font-bold text-[var(--neutral-dark-brown)]">
-            $478.33
+            ${totalAmount.toFixed(2)}
           </h2>
           <div className="text-end">
             <p className="text-[var(--neutral-dark-brown)] font-semibold">

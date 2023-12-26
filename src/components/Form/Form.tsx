@@ -13,7 +13,7 @@ function Form() {
       amount: number;
     }[] = [];
     for (const [key, value] of [...formData.entries()]) {
-      userData.push({ day: `${key}`, amount: parseInt(`${value}`) });
+      userData.push({ day: `${key}`, amount: parseFloat(`${value}`) });
     }
     userInput.setDates(userData);
   };
@@ -44,6 +44,8 @@ function Form() {
           {userInput.dates.map((date: { day: string; amount: number }) => (
             <li className="flex flex-row justify-start gap-7" key={date.day}>
               <input
+                required
+                step="0.01"
                 className="px-4 rounded-md h-7"
                 type="number"
                 id={date.day}
