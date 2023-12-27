@@ -9,20 +9,26 @@ function Main() {
     (prev, current) => prev + current.amount,
     0
   );
+
   const addBackgroundColor = useCallback((): void => {
     const amountArr: number[] = userData.dates.map((item) => item.amount);
 
     const highestAmount: number = Math.max(...amountArr);
     userData.dates.forEach(
-      (item: { day: String; amount: Number; color?: string }) => {
+      (item: {
+        day: String;
+        amount: number;
+        color?: string;
+        height?: number;
+      }) => {
         item.color =
           item.amount === highestAmount ? `--primary-cyan` : `--primary-red`;
+        item.height = item.amount / totalAmount;
       }
     );
   }, [userData.dates]);
 
   addBackgroundColor();
-  console.log(userData.dates);
 
   return (
     <div className="flex flex-col justify-center gap-4 p-4 bg-[var(--neutral-pale-orange)] rounded-xl">
@@ -31,7 +37,12 @@ function Main() {
       </h2>
       <ul className="relative flex flex-row items-end justify-between gap-2 py-4 border-b-2 border-b-slate-600/10">
         {userData.dates.map(
-          (date: { day: string; amount: number; color?: string }) => (
+          (date: {
+            day: string;
+            amount: number;
+            color?: string;
+            height?: number;
+          }) => (
             <li
               key={date.day}
               id={date.day}
@@ -43,9 +54,9 @@ function Main() {
                 </p>
               </div>
               <div
-                className="w-full sm:w-9 rounded-[0.2rem] hover:brightness-125 hover:cursor-pointer"
+                className="transition-[height] ease-in-out duration-[850ms] w-full sm:w-9 rounded-[0.2rem] hover:brightness-125 hover:cursor-pointer"
                 style={{
-                  height: `${(date.amount / totalAmount) * 100 * 10}px`,
+                  height: `${(date.amount / totalAmount) * 100 * 8}px`,
                   backgroundColor: `var(${date.color})`,
                 }}
               ></div>
@@ -62,7 +73,7 @@ function Main() {
         </p>
         <div className="flex flex-row items-center justify-between">
           <h2 className="text-2xl font-bold text-[var(--neutral-dark-brown)]">
-            ${totalAmount.toFixed(2)}
+            ${totalAmount}
           </h2>
           <div className="text-end">
             <p className="text-[var(--neutral-dark-brown)] font-semibold">
