@@ -1,9 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { userContext } from "../../App";
 
 function Form() {
   const userInput = useContext(userContext);
-  const userBalance = useContext;
   if (!userInput) return null;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
